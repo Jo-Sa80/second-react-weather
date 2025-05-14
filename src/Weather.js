@@ -1,58 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 
-export default function Weather() {
-  function displayTemperature(response) {
-    alert(response.data.temperature.current);
+export default function Weather(props) {
+  const [weatherData, setWeatherData] = useState({ ready: false });
+  function displayData(response) {
+    console.log(response.data);
+    setWeatherData({
+      ready: true,
+      city: response.data.city,
+      description: response.data.condition.description,
+      temperature: Math.round(response.data.temperature.current),
+      wind: response.data.wind.speed,
+      humidity: response.data.temperature.humidity,
+      icon: response.data.condition.icon_url,
+    });
   }
-
-  const apiKey = "1c9131f04b7fo56320ba61f00b43t4cd";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=london&key=${apiKey}`;
-  axios.get(apiUrl).then(displayTemperature);
-  return (
-    <div className="Weather">
-      <form>
+  if (weatherData.ready) {
+    return (
+      <div className="Weather">
+        <form>
+          <div className="row">
+            <div className="col-9">
+              <input
+                type="search"
+                placeholder="Enter a City..."
+                className="w-100 form-control"
+                autoFocus="on"
+              />
+            </div>
+            <div className="col-3">
+              <input
+                className="btn btn-primary w-100"
+                type="submit"
+                value="Search"
+              />
+            </div>
+          </div>
+        </form>
+        <h1>{weatherData.city}</h1>
+        <ul>
+          <li> Wednesday 7:00</li>
+          <li className="text-capitalize">{weatherData.description}</li>
+        </ul>
         <div className="row">
-          <div className="col-9">
-            <input
-              type="search"
-              placeholder="Enter a City..."
-              className="w-100 form-control"
-              autoFocus="on"
-            />
+          <div className="col-6">
+            <img src={weatherData.icon} alt={weatherData.description} />
+            <span className="Temperature">{weatherData.temperature}</span>{" "}
+            <span className="unit">°C | °F</span>
           </div>
-          <div className="col-3">
-            <input
-              className="btn btn-primary w-100"
-              type="submit"
-              value="Search"
-            />
+          <div className="col-6">
+            <ul className="conditions">
+              <li>Humidity: {weatherData.humidity}%</li>
+              <li>Wind: {weatherData.wind} km/h</li>
+            </ul>
           </div>
-        </div>
-      </form>
-      <h1>New York</h1>
-      <ul>
-        <li> Wednesday 7:00</li>
-        <li>Mostly Cloudy</li>
-      </ul>
-      <div className="row">
-        <div className="col-6">
-          <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAAdVJREFUaN7tmc1thDAQRimBElwCJVBCSvAxR5fgEiiBEiiBErhyIx24A2cc2WhiAf4ZA1rJkZ4UZZPN9/AwHrON1rr5ZJoqUAWqQBWoAlWgxJf++WaAAGZAAdpD2dfM7zDS/yopAGE6YDoIHMLIdK8KQIAWGIAtQ8Bh/r59bQWQjCBILCkSJIF1XVuAA9Jivm9ROd0ukS0AQTtgA7SH+Vn31EoEBSAMA2YUUAHiJDyWcCtBuidIArZEroJewVEpjQSJjiIgMsMbpHdjf53sCcEWSxEYCQKOyZQhkshZBZYkYEtHeLVPQSGJnHIS0QI2/FIo+L+VILTXOUVA3BD+D3Q/pAqoFIEebUxFQQLJN/Ojo0TEqDG/JgBv1hdgeVNAP4CKPSvkCKiCQc1KSMRs2+x902hO/Z4cYFhgWOQHY8zo9hOKgCCGH71BEXcqHjEBKDft5gowypVH4YeLgKE9ZSO10cxz7z7TFJqxOEUgZxyYbPi+0M4uSRuZPYCnCPBA6TwrYCWWyFbJImo/FTMpM6pAG5CYvDO0LDii7x2JNAtdSGxuQyp41Q87UqkHW8NJzYsbw+8d6Y5Hi+7qbw8IyOIPd9HRVD8qUD8fqAJVoApUgSrwqfwCJ6xaZshM+xMAAAAASUVORK5CYII="
-            alt="mostly Cloudy"
-          />
-          <span className="Temperature">6</span>{" "}
-          <span className="unit">°C | °F</span>
-        </div>
-        <div className="col-6">
-          <ul className="conditions">
-            <li>Precipitation: 0%</li>
-            <li>Humidity: 36%</li>
-            <li>Wind: 8 km/h</li>
-          </ul>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const apiKey = "1c9131f04b7fo56320ba61f00b43t4cd";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${props.defaultCity}&key=${apiKey}`;
+    axios.get(apiUrl).then(displayData);
+
+    return "Loading...";
+  }
 }
