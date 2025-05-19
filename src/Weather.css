@@ -43,6 +43,9 @@
   top: -34px;
   line-height: 1;
 }
+.Weather .unit a {
+  color: blue;
+}
 
 .Weather .conditions {
   padding-top: 20px;
