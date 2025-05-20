@@ -5,6 +5,7 @@ export default function App() {
   return (
     <div className="App">
       <Weather defaultCity="London" />
+
       <footer>
         This project was coded by{" "}
         <a href="https://github.com/Jo-Sa80" target="_blank" rel="noreferrer">

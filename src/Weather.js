@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Weather.css";
 
 import WeatherInfo from "./WeatherInfo";
+import Forecast from "./Forecast";
 
 export default function Weather(props) {
   function search() {
@@ -59,6 +60,9 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
+        <div>
+          <Forecast data={weatherData} />
+        </div>
       </div>
     );
   } else {
