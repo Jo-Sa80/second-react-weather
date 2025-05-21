@@ -5,7 +5,7 @@ export default function WeatherForecastDay(props) {
     return Math.round(props.info.temperature.minimum);
   }
   function tempMax() {
-    Math.round(props.info.temperature.maximum);
+    return Math.round(props.info.temperature.maximum);
   }
 
   function day() {

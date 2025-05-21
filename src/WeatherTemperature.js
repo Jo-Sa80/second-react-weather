@@ -4,7 +4,6 @@ import "./Weather.css";
 export default function WeatherTemperature(props) {
   let celcius = props.celcius;
   let fahrenheit = Math.round(celcius * 1.8 + 32);
-  console.log(fahrenheit);
 
   const [unit, setUnit] = useState(celcius);
 

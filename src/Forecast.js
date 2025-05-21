@@ -8,6 +8,11 @@ export default function Forecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
 
+  function getCity() {
+    let city = props.city;
+    console.log(city);
+    return city;
+  }
   function DisplayForecast(response) {
     setForecast(response.data.daily);
     setLoaded(true);
@@ -34,7 +39,7 @@ export default function Forecast(props) {
     );
   } else {
     let apiKey = "1c9131f04b7fo56320ba61f00b43t4cd";
-    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${props.data.city}&key=${apiKey}`;
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${getCity()}&key=${apiKey}`;
 
     axios.get(apiUrl).then(DisplayForecast);
     return null;
