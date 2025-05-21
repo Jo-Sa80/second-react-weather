@@ -3,7 +3,9 @@ import "./Weather.css";
 
 export default function WeatherTemperature(props) {
   let celcius = props.celcius;
-  let fahrenheit = Math.round(props.celcius * 1.8 + 32);
+  let fahrenheit = Math.round(celcius * 1.8 + 32);
+  console.log(fahrenheit);
+
   const [unit, setUnit] = useState(celcius);
 
   function changetoFahrenheit(event) {
@@ -15,18 +17,29 @@ export default function WeatherTemperature(props) {
     setUnit(celcius);
   }
 
-  return (
-    <span className="WeatherTemperature">
-      <span className="Temperature">{unit}</span>{" "}
-      <span className="unit">
-        <a href="/" onClick={changetoCelcius}>
-          °C
-        </a>{" "}
-        |
-        <a href="/" onClick={changetoFahrenheit}>
-          °F
-        </a>
+  if (unit === celcius) {
+    return (
+      <span className="WeatherTemperature">
+        <span className="Temperature">{celcius}</span>{" "}
+        <span className="unit">
+          °C |
+          <a href="/" onClick={changetoFahrenheit}>
+            °F
+          </a>
+        </span>
       </span>
-    </span>
-  );
+    );
+  } else {
+    return (
+      <span className="WeatherTemperature">
+        <span className="Temperature">{fahrenheit}</span>{" "}
+        <span className="unit">
+          <a href="/" onClick={changetoCelcius}>
+            °C
+          </a>{" "}
+          | °F
+        </span>
+      </span>
+    );
+  }
 }

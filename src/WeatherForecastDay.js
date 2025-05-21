@@ -1,8 +1,13 @@
 import React from "react";
 
 export default function WeatherForecastDay(props) {
-  let tempMin = Math.round(props.info.temperature.minimum);
-  let tempMax = Math.round(props.info.temperature.maximum);
+  function tempMin() {
+    return Math.round(props.info.temperature.minimum);
+  }
+  function tempMax() {
+    Math.round(props.info.temperature.maximum);
+  }
+
   function day() {
     let date = new Date(props.info.time * 1000);
     let day = date.getDay();
@@ -18,8 +23,8 @@ export default function WeatherForecastDay(props) {
         alt={props.info.condition.description}
       />{" "}
       <div className="Forecast-temperature">
-        <span className="Forecast-temperature-max">{tempMax}°</span>{" "}
-        <span className="Forecast-temperature-min">{tempMin}°</span>
+        <span className="Forecast-temperature-max">{tempMax()}°</span>{" "}
+        <span className="Forecast-temperature-min">{tempMin()}°</span>
       </div>
     </div>
   );
